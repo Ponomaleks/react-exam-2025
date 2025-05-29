@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html
+  lang="uk"
+  oncontextmenu="return false"
+  oncopy="return false"
+  oncut="return false"
+  onpaste="return false"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Екзаменаційна форма</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 2rem;
+        user-select: none;
+      }
+      select,
+      textarea,
+      input {
+        width: 100%;
+        height: 42px;
+        margin-top: 0.5rem;
+        font-size: 16px;
+        margin-bottom: 8px;
+      }
+      .question {
+        margin-bottom: 1.5rem;
+      }
+      button {
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+      }
+      #questions,
+      #submitButton,
+      #completion,
+      #timer {
+        display: none;
+      }
+      #toast {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        background-color: #e74c3c;
+        color: white;
+        padding: 0.75rem 1.25rem;
+        border-radius: 0.5rem;
+        display: none;
+        z-index: 9999;
+      }
+      #startSection {
+        margin-bottom: 2rem;
+        width: 500px;
+      }
+    </style>
+  </head>
+  <body
+    oncontextmenu="return false"
+    oncopy="return false"
+    oncut="return false"
+    onpaste="return false"
+  >
+    <h1>Екзамен з React</h1>
+    <div id="timer-warn"></div>
+    <div id="warn"></div>
+    <div id="prtscr-warn"></div>
+    <div id="toast">Заборонено відкривати інструменти розробника</div>
+
+    <form id="startSection">
+      <label for="studentName">ПІБ студента:</label><br />
+      <input type="text" id="studentName" required />
+      <label for="studentGroup">Група:</label><br />
+      <select id="studentGroup" required>
+        <option value="" disabled selected>Оберіть групу</option>
+        <option value="КН-22-1">КН-22-1</option>
+        <option value="КН-22-2">КН-22-2</option>
+        <option value="КН-22-3">КН-22-3</option>
+      </select>
+      <button type="submit">Почати</button>
+    </form>
+
+    <div id="timer">Час до завершення: 60:00</div>
+
+    <div id="examForm">
+      <div id="questions">
+        <div class="question">
+          <select id="q1">
+            <option value="" disabled selected>
+              Що з наведеного викликає повторний рендер функціонального
+              компонента в React?
+            </option>
+            <option value="A: Зміна значення змінної, оголошеної через let">
+              A: Зміна значення змінної, оголошеної через let
+            </option>
+            <option
+              value="B: Компонент перерендерюється, але тільки змінена частина DOM оновлюється"
+            >
+              B: Виклик useEffect
+            </option>
+            <option value="C: Зміни state не впливають на DOM">
+              C: Зміна state за допомогою setState або useState
+            </option>
+            <option value="D: Імпорт нового модуля">
+              D: Імпорт нового модуля
+            </option>
+          </select>
+        </div>
+
+        <div class="question">
+          <select id="q2">
+            <option value="" disabled selected>
+              Яка з наведених конструкцій некоректна при використанні хуків?
+            </option>
+            <option value="A: useState всередині функції компонента">
+              A: useState всередині функції компонента
+            </option>
+            <option value="B: useEffect всередині умовного оператора">
+              B: useEffect всередині умовного оператора
+            </option>
+            <option value="C: useReducer у корені функціонального компонента">
+              C: useReducer у корені функціонального компонента
+            </option>
+            <option value="D: useEffect(() => {}, [])">
+              D: useEffect(() => {}, [])
+            </option>
+          </select>
+        </div>
+
+        <div class="question">
+          <select id="q3">
+            <option value="" disabled selected>
+              Що буде результатом при цьому useEffect?
+            </option>
+            <option value="A: Буде викликано Mounted лише 1 раз">
+              A: Буде викликано "Mounted" лише 1 раз
+            </option>
+            <option value="B: Буде виводити обидва при кожному рендері">
+              B: Буде виводити обидва при кожному рендері
+            </option>
+            <option value="C: “Unmounted” не викликається ніколи">
+              C: “Unmounted” не викликається ніколи
+            </option>
+            <option value="D: Викликається на кожен клік">
+              D: Викликається на кожен клік
+            </option>
+          </select>
+          <img src="./assets/img/q3.png" alt="code example" />
+        </div>
+
+        <div class="question">
+          <select id="q4">
+            <option value="" disabled selected>
+              Який з варіантів оновлює стан правильно, якщо нове значення
+              залежить від попереднього?
+            </option>
+            <option value="A: setCount(count + 1)">
+              A: setCount(count + 1)
+            </option>
+            <option value="B: setCount(prev => prev + 1)">
+              B: setCount(prev => prev + 1)
+            </option>
+            <option value="C: count++">C: count++</option>
+            <option value="D: useState(count + 1)">
+              D: useState(count + 1)
+            </option>
+          </select>
+        </div>
+
+        <div class="question">
+          <select id="q5">
+            <option value="" disabled selected>
+              Який з варіантів правильно створює функціональний компонент у
+              React?
+            </option>
+            <option
+              value="A: function MyComponent() { return &lt;div&gt;Text&lt;/div&gt;; }"
+            >
+              A: function MyComponent() { return &lt;div&gt;Text&lt;/div&gt;; }
+            </option>
+            <option value="B: const MyComponent = new Component();">
+              B: const MyComponent = new Component();
+            </option>
+            <option value="C: MyComponent = &lt;div&gt;Text&lt;/div&gt;">
+              C: MyComponent = &lt;div&gt;Text&lt;/div&gt;
+            </option>
+            <option value="D: render(&lt;MyComponent&gt;)">
+              D: render(&lt;MyComponent&gt;)
+            </option>
+          </select>
+        </div>
+
+        <div class="question">
+          <select id="q6">
+            <option value="" disabled selected>
+              Що може повертати функція, яку ви передаєте в useEffect?
+            </option>
+            <option value="A. Нова змінна стану">A. Нова змінна стану</option>
+            <option value="B. Об’єкт з параметрами ефекту">
+              B. Об’єкт з параметрами ефекту
+            </option>
+            <option value="C. Функція очистки (cleanup function)">
+              C. Функція очистки (cleanup function)
+            </option>
+            <option value="D. Функція, яка виконується при кліку на елемент">
+              D. Функція, яка виконується при кліку на елемент
+            </option>
+          </select>
+        </div>
+
+        <div class="question">
+          <select id="q7">
+            <option value="" disabled selected>
+              Яке з тверджень про Virtual DOM є неправильним?
+            </option>
+            <option
+              value="A: Virtual DOM оновлюється кожного разу при зміні стану"
+            >
+              A: Virtual DOM оновлюється кожного разу при зміні стану
+            </option>
+            <option
+              value="B: React напряму змінює справжній DOM без оптимізації для пришвидшення швидкодії"
+            >
+              B: React напряму змінює справжній DOM без оптимізації для
+              пришвидшення швидкодії
+            </option>
+            <option
+              value="C: Virtual DOM порівнюється з попередньою версією для мінімальних змін"
+            >
+              C: Virtual DOM порівнюється з попередньою версією для мінімальних
+              змін
+            </option>
+            <option
+              value="D: Virtual DOM допомагає пришвидшити оновлення інтерфейсу"
+            >
+              D: Virtual DOM допомагає пришвидшити оновлення інтерфейсу
+            </option>
+          </select>
+        </div>
+
+        <div class="question">
+          <select id="q8">
+            <option value="" disabled selected>
+              Як React визначає, чи потрібно оновити компонент?
+            </option>
+            <option value="A: Виконує глибоке порівняння DOM">
+              A: Виконує глибоке порівняння DOM
+            </option>
+            <option value="B: Порівнює пропси та state з попередніми">
+              B: Порівнює пропси та state з попередніми
+            </option>
+            <option value="C: Примусово оновлює кожен компонент">
+              C: Примусово оновлює кожен компонент
+            </option>
+            <option value="D: Змінює лише той DOM, який викликав помилку">
+              D: Змінює лише той DOM, який викликав помилку
+            </option>
+          </select>
+        </div>
+
+        <div class="question">
+          <select id="q9">
+            <option value="" disabled selected>
+              Що обов'язково повинен робити useEffect при роботі з інтервалами?
+            </option>
+            <option value="A: Повертати інтервал">A: Повертати інтервал</option>
+            <option value="B: Очистити інтервал у тілі ефекту">
+              B: Очистити інтервал у тілі ефекту
+            </option>
+            <option value="C: Викликати setTimeout">
+              C: Викликати setTimeout
+            </option>
+            <option value="D: Повернути функцію, яка очищає інтервал">
+              D: Повернути функцію, яка очищає інтервал
+            </option>
+          </select>
+        </div>
+
+        <div class="question">
+          <select id="q10">
+            <option value="" disabled selected>
+              Чим контрольована форма відрізняється від неконтрольованої?
+            </option>
+            <option value="A: Контрольована не використовує state">
+              A: Контрольована не використовує state
+            </option>
+            <option value="B: Неконтрольована повністю контролюється React">
+              B: Неконтрольована повністю контролюється React
+            </option>
+            <option value="C: Контрольована керується через useState">
+              C: Контрольована керується через useState
+            </option>
+            <option value="D: Неконтрольована форма завжди валідна">
+              D: Неконтрольована форма завжди валідна
+            </option>
+          </select>
+        </div>
+
+        <div class="question">
+          <select id="q11">
+            <option value="" disabled selected>
+              Як здійснити програмну навігацію у React Router 6?
+            </option>
+            <option value="A: window.location.href = '/page'">
+              A: window.location.href = '/page'
+            </option>
+            <option value="B: navigate('/page') після імпорту хука">
+              B: navigate('/page') після імпорту хука
+            </option>
+            <option value='C: &lt;a href="/page"&gt;Link&lt;/a&gt;'>
+              C: &lt;a href=&quot;/page&quot;&gt;Link&lt;/a&gt;
+            </option>
+            <option value="D: useRouter().push('/page')">
+              D: useRouter().push('/page')
+            </option>
+          </select>
+        </div>
+
+        <div class="question">
+          <select id="q12">
+            <option value="" disabled selected>
+              У якому випадку варто застосовувати useMemo()?
+            </option>
+            <option value="A: Щоб уникнути помилок при ререндері">
+              A: Щоб уникнути помилок при ререндері
+            </option>
+            <option
+              value="B: Щоб зберегти результат складних обчислень між рендерами"
+            >
+              B: Щоб зберегти результат складних обчислень між рендерами
+            </option>
+            <option value="C: Щоб запобігти ререндеру дочірніх компонентів">
+              C: Щоб запобігти ререндеру дочірніх компонентів
+            </option>
+            <option value="D: Щоб обійти обмеження хуків">
+              D: Щоб обійти обмеження хуків
+            </option>
+          </select>
+        </div>
+
+        <div class="question">
+          <label
+            >Поясніть, чому важливо не змінювати state напряму, а
+            використовувати setState (або setCount). Що може піти не так?</label
+          ><br />
+          <textarea name="entry.2222222222" id="q13" rows="5"></textarea>
+        </div>
+
+        <div class="question">
+          <label
+            >Опишіть ситуацію, коли слід використовувати useRef замість
+            useState. Наведіть приклад.</label
+          ><br />
+          <textarea name="entry.3333333333" id="q14" rows="5"></textarea>
+        </div>
+
+        <div class="question">
+          <label>В чому суть Redux? Як він допомагає у великих додатках?</label
+          ><br />
+          <textarea name="entry.3333333333" id="q15" rows="5"></textarea>
+        </div>
+
+        <div class="question">
+          <label
+            >Уявіть компонент, який має очищати слухача події window при
+            анмаунті. Як це зробити в useEffect?</label
+          ><br />
+          <textarea name="entry.3333333333" id="q16" rows="5"></textarea>
+        </div>
+
+        <div class="question">
+          <label>Завдання 1: Компонент «Таймер» з кнопкою скидання (10б).</label
+          ><br />
+          <p>Створіть компонент Timer, який:</p>
+          <ul>
+            <li>Виводить кількість секунд, що минули з моменту монтування.</li>
+            <li>Має кнопку "Скинути", яка обнуляє таймер.</li>
+            <li>Має ефективну очистку інтервалу.</li>
+            <li>
+              Умова: Заборонено використання сторонніх бібліотек. Поясніть, чому
+              потрібно очищати інтервал у useEffect.
+            </li>
+          </ul>
+          <textarea name="entry.3333333333" id="q17" rows="20"></textarea>
+        </div>
+
+        <div class="question">
+          <label>Завдання 2: Маршрути та форми (10б).</label><br />
+          <p>
+            Створіть два простих маршрути за допомогою react-router-dom: /form
+            та /thankyou.
+          </p>
+          <ul>
+            <li>
+              На сторінці /form має бути контрольована форма з полем email та
+              кнопкою Submit.
+            </li>
+            <li>При відправці форма перенаправляє на /thankyou</li>
+          </ul>
+          <textarea name="entry.3333333333" id="q18" rows="20"></textarea>
+        </div>
+      </div>
+
+      <button type="button" id="submitButton" click="">
+        Надіслати відповіді
+      </button>
+    </div>
+
+    <div id="completion"></div>
+
+    <script>
+      let interval, examDuration;
+      const totalDuration = 60 * 60;
+      let leaveCounter = 0;
+      let printScreenCounter = 0;
+      let submitted = false;
+
+      const fields = [
+        'studentName',
+        'studentGroup',
+        'q1',
+        'q2',
+        'q3',
+        'q4',
+        'q5',
+        'q6',
+        'q7',
+        'q8',
+        'q9',
+        'q10',
+        'q11',
+        'q12',
+        'q13',
+        'q14',
+        'q15',
+        'q16',
+        'q17',
+        'q18',
+      ];
+
+      document
+        .getElementById('startSection')
+        .addEventListener('submit', function (e) {
+          e.preventDefault();
+          startExam();
+        });
+
+      function showToast(message) {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.style.display = 'block';
+        setTimeout(() => (toast.style.display = 'none'), 3000);
+      }
+
+      function startExam() {
+        const nameInput = document.getElementById('studentName');
+        const groupInput = document.getElementById('studentGroup');
+
+        if (!nameInput.value.trim() && !groupInput.value) {
+          showToast('Будь ласка, введіть ПІБ та номер групи.');
+          return;
+        }
+
+        sessionStorage.setItem('studentName', nameInput.value);
+        sessionStorage.setItem('studentGroup', groupInput.value);
+        const startTime = Date.now();
+        sessionStorage.setItem('examStart', startTime);
+        examDuration = totalDuration;
+        runExam();
+      }
+
+      function runExam() {
+        document.getElementById('startSection').style.display = 'none';
+        document.getElementById('questions').style.display = 'block';
+        document.getElementById('submitButton').style.display = 'inline-block';
+        document.getElementById('timer').style.display = 'block';
+
+        interval = setInterval(() => {
+          const start = parseInt(sessionStorage.getItem('examStart'));
+          const elapsed = Math.floor((Date.now() - start) / 1000);
+          examDuration = totalDuration - elapsed;
+
+          if (examDuration / 60 <= 10) {
+            document.getElementById('timer-warn').textContent =
+              'Залишилось менше 10 хвилин до автоматичного  завершення екзамену!';
+            document.getElementById('timer-warn').style.color = 'red';
+          }
+          if (examDuration <= 0) {
+            submitExam();
+          } else {
+            let m = Math.floor(examDuration / 60)
+              .toString()
+              .padStart(2, '0');
+            let s = (examDuration % 60).toString().padStart(2, '0');
+            document.getElementById(
+              'timer',
+            ).textContent = `Час до завершення: ${m}:${s}`;
+          }
+        }, 1000);
+      }
+
+      function submitExam() {
+        if (submitted) return;
+        submitted = true;
+
+        clearInterval(interval);
+        document.getElementById('timer').style.display = 'none';
+        document.getElementById('questions').style.display = 'none';
+        document.getElementById('submitButton').style.display = 'none';
+
+        const studentName = document.getElementById('studentName').value;
+        const studentGroup = document.getElementById('studentGroup').value;
+        const answer1 = document.getElementById('q1').value;
+        const answer2 = document.getElementById('q2').value;
+        const answer3 = document.getElementById('q3').value;
+        const answer4 = document.getElementById('q4').value;
+        const answer5 = document.getElementById('q5').value;
+        const answer6 = document.getElementById('q6').value;
+        const answer7 = document.getElementById('q7').value;
+        const answer8 = document.getElementById('q8').value;
+        const answer9 = document.getElementById('q9').value;
+        const answer10 = document.getElementById('q10').value;
+        const answer11 = document.getElementById('q11').value;
+        const answer12 = document.getElementById('q12').value;
+        const answer13 = document.getElementById('q13').value;
+        const answer14 = document.getElementById('q14').value;
+        const answer15 = document.getElementById('q15').value;
+        const answer16 = document.getElementById('q16').value;
+        const answer17 = document.getElementById('q17').value;
+        const answer18 = document.getElementById('q18').value;
+
+        const formData = new FormData();
+        formData.append('entry.629161011', studentName);
+        formData.append('entry.2131724715', studentGroup);
+        formData.append('entry.740871172', answer1);
+        formData.append('entry.299537848', answer2);
+        formData.append('entry.1844875490', answer3);
+        formData.append('entry.1086208570', answer4);
+        formData.append('entry.329549513', answer5);
+        formData.append('entry.1544031135', answer6);
+        formData.append('entry.2091533681', answer7);
+        formData.append('entry.2097359382', answer8);
+        formData.append('entry.329624846', answer9);
+        formData.append('entry.403638561', answer10);
+        formData.append('entry.167321614', answer11);
+        formData.append('entry.387314928', answer12);
+        formData.append('entry.1602741044', answer13);
+        formData.append('entry.1337778319', answer14);
+        formData.append('entry.459274357', answer15);
+        formData.append('entry.1519464547', answer16);
+        formData.append('entry.972240194', answer17);
+        formData.append('entry.612231534', answer18);
+        formData.append('entry.156974795', leaveCounter);
+        formData.append('entry.1539974511', printScreenCounter);
+
+        try {
+          fetch(
+            'https://docs.google.com/forms/u/0/d/e/1FAIpQLSezJCiFIBLpKVXHNQXyKpAVC6lunw_FuLVuJSDglcQHN7koOg/formResponse',
+            {
+              method: 'POST',
+              mode: 'no-cors',
+              body: new URLSearchParams(formData),
+            },
+          );
+        } catch (e) {
+          console.error('Помилка при надсиланні форми:', e);
+          showToast('Помилка при надсиланні форми. Спробуйте ще раз.');
+          return;
+        }
+
+        const output = `
+        <h2>Екзамен завершено</h2>
+        <p><strong>ПІБ:</strong> ${
+          document.getElementById('studentName').value
+        }</p>
+        <p><strong>Група:</strong> ${
+          document.getElementById('studentGroup').value
+        }</p>
+        <p><strong>1:</strong> ${document.getElementById('q1').value}</p>
+        <p><strong>2:</strong> ${document.getElementById('q2').value}</p>
+        <p><strong>3:</strong> ${document.getElementById('q3').value}</p>
+        <p><strong>4:</strong> ${document.getElementById('q4').value}</p>
+        <p><strong>5:</strong> ${document.getElementById('q5').value}</p>
+        <p><strong>6:</strong> ${document.getElementById('q6').value}</p>
+        <p><strong>7:</strong> ${document.getElementById('q7').value}</p>
+        <p><strong>8:</strong> ${document.getElementById('q8').value}</p>
+        <p><strong>9:</strong> ${document.getElementById('q9').value}</p>
+        <p><strong>10:</strong> ${document.getElementById('q10').value}</p>
+        <p><strong>11:</strong> ${document.getElementById('q11').value}</p>
+        <p><strong>12:</strong> ${document.getElementById('q12').value}</p>
+        <p><strong>13:</strong> ${document.getElementById('q13').value}</p>
+        <p><strong>14:</strong> ${document.getElementById('q14').value}</p>
+        <p><strong>15:</strong> ${document.getElementById('q15').value}</p>
+        <p><strong>16:</strong> ${document.getElementById('q16').value}</p>
+        <p><strong>17:</strong> ${document.getElementById('q17').value}</p>  
+        <p><strong>18:</strong> ${document.getElementById('q18').value}</p>
+        <p><strong>Вкладку покинуто:</strong> ${leaveCounter} разів</p>
+        <p><strong>Знімків екрану зроблено:</strong> ${printScreenCounter}</p>
+        <p>Дякуємо за участь!</p>
+      `;
+        document.getElementById('completion').innerHTML = output;
+        document.getElementById('completion').style.display = 'block';
+
+        sessionStorage.clear();
+        submitExam();
+      }
+
+      function handleSubmit(e) {
+        e.preventDefault();
+
+        submitExam();
+      }
+
+      // DevTools Block
+      document.addEventListener('keydown', function (e) {
+        const key = e.key.toLowerCase();
+        if ((e.ctrlKey && key === 's') || (e.metaKey && key === 's')) {
+          e.preventDefault();
+          showToast('Збереження заборонено під час екзамену');
+        }
+
+        if (
+          e.key === 'F12' ||
+          (e.ctrlKey && e.shiftKey && ['i', 'j', 'c'].includes(key)) ||
+          (e.ctrlKey && key === 'u') ||
+          (e.metaKey && e.altKey && key === 'i') ||
+          (e.metaKey && e.altKey && key === 'c')
+        ) {
+          e.preventDefault();
+          showToast('Заборонено відкривати інструменти розробника');
+        }
+
+        if (
+          e.key === 'PrintScreen' ||
+          (e.ctrlKey && key === 'p') ||
+          (e.ctrlKey && e.shiftKey && key === 's') ||
+          (e.ctrlKey && e.shiftKey && key === 'і') ||
+          (e.altKey && e.shiftKey && key === 's') ||
+          (e.altKey && e.shiftKey && key === 'і') ||
+          (e.metaKey && e.shiftKey && key === 's') ||
+          (e.metaKey && e.shiftKey && key === 'і') ||
+          (e.metaKey && key === 'p') ||
+          (e.ctrlKey && e.shiftKey && key === '4') ||
+          (e.metaKey && e.shiftKey && key === '4') ||
+          (e.metaKey && e.shiftKey && key === '3')
+        ) {
+          e.preventDefault();
+          printScreenCounter++;
+          sessionStorage.setItem('printScreenCounter', printScreenCounter);
+          showToast('Скріншоти заборонені під час екзамену');
+          document.getElementById(
+            'prtscr-warn',
+          ).textContent = `⚠️ ${printScreenCounter} знімків екрану зроблено.`;
+        }
+      });
+
+      // Focus Loss Tracking
+      window.onblur = () => {
+        if (!submitted) {
+          leaveCounter++;
+          sessionStorage.setItem('leaveCounter', leaveCounter);
+          document.getElementById(
+            'warn',
+          ).textContent = `⚠️ Ви вже ${leaveCounter} раз(ів) залишали вкладку.`;
+        }
+      };
+      window.onbeforeunload = function () {
+        if (!submitted)
+          return 'Ти точно хочеш вийти зі сторінки? Відповіді можуть бути втрачені.';
+      };
+
+      // Auto save
+      fields.forEach(id => {
+        const el = document.getElementById(id);
+        const saved = sessionStorage.getItem(id);
+        if (saved) el.value = saved;
+        el.addEventListener('input', () =>
+          sessionStorage.setItem(id, el.value),
+        );
+      });
+
+      // On page reload
+      window.onload = () => {
+        const started = sessionStorage.getItem('examStart');
+        if (started) {
+          fields.forEach(id => {
+            const el = document.getElementById(id);
+            const saved = sessionStorage.getItem(id);
+            if (saved) el.value = saved;
+          });
+          leaveCounter = parseInt(
+            sessionStorage.getItem('leaveCounter') || '0',
+          );
+          runExam();
+        }
+
+        if (leaveCounter) {
+          document.getElementById(
+            'warn',
+          ).textContent = `⚠️ Ви вже ${leaveCounter} раз(ів) покидали вкладку.`;
+        }
+        if (printScreenCounter) {
+          document.getElementById(
+            'prtscr-warn',
+          ).textContent = `⚠️ ${printScreenCounter} знімків екрану зроблено.`;
+        }
+
+        document
+          .getElementById('submitButton')
+          .addEventListener('click', handleSubmit);
+      };
+    </script>
+  </body>
+</html>
